@@ -1,162 +1,390 @@
-/*import React from "react";
+// import React, { useState } from "react";
+// import { AssetModal } from "./AssetModal";
+
+// const formatIsoDate = (iso) => {
+//   if (!iso) return "";
+//   const [year, month, day] = iso.split("-");
+//   return `${day}/${parseInt(month, 10)}/${year}`;
+// };
+
+// const AdminDashboard = ({ requests, onUpdateStatus, catalogo }) => {
+
+//   const [ventarch, setventarch] = useState([]);
+//   const [ventavisi, setventavisi] = useState(false);
+
+//   const getArchivosReq = (archid) => {
+//     if (!Array.isArray(archid)) return [];
+//     return catalogo.filter(asset => archid.includes(asset.id));
+//   };
+
+//   const abrirVen = (items) => {
+//     const archivos = getArchivosReq(items);
+//     setventarch(archivos);
+//     setventavisi(true);
+//   };
+
+//   const cerrarVen = () => {
+//     setventavisi(false);
+//     setventarch([]);
+//   };
+
+//   return (
+//     <div>
+//       <h2>Solicitudes de Usuarios</h2>
+//       <table style={{ width: "100%", borderCollapse: "collapse" }}>
+//         <thead>
+//           <tr style={{ background: "#f0f0f0" }}>
+//             <th>Usuario</th>
+//             <th>Email</th>
+//             <th>Descripción</th>
+//             <th>Fecha solicitud</th>
+//             <th>Fecha límite</th>
+//             <th>Estado</th>
+//             <th>Archivos asociados</th>
+//             <th>Acciones</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {requests.map(req => {
+//             const conta = Array.isArray(req.items) ? req.items.length : 0;
+//             return (
+//               <tr key={req.id} style={{ borderBottom: "1px solid #ddd" }}>
+//                 <td>{req.requesterName}</td>
+//                 <td>{req.requesterEmail}</td>
+//                 <td>{req.purpose}</td>
+//                 <td>
+//                   {new Date(req.createdAt).toLocaleDateString("es-CO", {
+//                     day: "2-digit",
+//                     month: "2-digit",
+//                     year: "numeric",
+//                   })}
+//                 </td>
+//                 <td>{formatIsoDate(req.deadline)}</td>
+//                 <td>{req.status}</td>
+//                 <td>
+//                   {conta > 0
+//                     ? (
+//                       <button
+//                         onClick={() => abrirVen(req.items)}
+//                         style={{
+//                           background: "none",
+//                           border: "none",
+//                           color: "#007bff",
+//                           cursor: "pointer",
+//                           textDecoration: "underline",
+//                           padding: 0
+//                         }}
+//                       >
+//                         {conta} archivo{conta > 1 ? "s" : ""}
+//                       </button>
+//                     )
+//                     : (<em>No hay archivos</em>)
+//                   }
+//                 </td>
+//                 <td>
+//                   <button
+//                     onClick={() => actualizarest(req.id, "Approved")}
+//                     style={approveBtn}
+//                   >
+//                     Aprobar
+//                   </button>
+//                   <button
+//                     onClick={() => actualizarest(req.id, "Rejected")}
+//                     style={rejectBtn}
+//                   >
+//                     Rechazar
+//                   </button>
+//                 </td>
+//               </tr>
+//             );
+//           })}
+//         </tbody>
+//       </table>
+
+//       {ventavisi && (
+//         <AssetModal assets={ventarch} onClose={cerrarVen} />
+//       )}
+//     </div>
+//   );
+// };
+
+// // Estilos inline de los botones (puedes extraer a CSS):
+// const approveBtn = {
+//   background: "#4caf50",
+//   color: "#fff",
+//   padding: "0.4rem 0.8rem",
+//   border: "none",
+//   borderRadius: "4px",
+//   marginRight: "0.5rem",
+//   cursor: "pointer"
+// };
+// const rejectBtn = {
+//   background: "#f44336",
+//   color: "#fff",
+//   padding: "0.4rem 0.8rem",
+//   border: "none",
+//   borderRadius: "4px",
+//   cursor: "pointer"
+// };
+
+// export default AdminDashboard;
+
+
+// import React, { useState } from "react";
+// import { AssetModal } from "./AssetModal";
+
+// const formatIsoDate = (iso) => {
+//   if (!iso) return "";
+//   const [year, month, day] = iso.split("-");
+//   return `${day}/${parseInt(month, 10)}/${year}`;
+// };
+
+// const AdminDashboard = ({ requests, onUpdateStatus, catalogo }) => {
+//   const [ventarch, setVentarch] = useState([]);
+//   const [ventavisi, setVentavisi] = useState(false);
+
+//   const getArchivosReq = (ids) => {
+//     if (!Array.isArray(ids)) return [];
+//     return catalogo.filter(asset => ids.includes(asset.id));
+//   };
+
+//   const abrirVen = (items) => {
+//     const archivos = getArchivosReq(items);
+//     setVentarch(archivos);
+//     setVentavisi(true);
+//   };
+
+//   const cerrarVen = () => {
+//     setVentavisi(false);
+//     setVentarch([]);
+//   };
+
+//   return (
+//     <div>
+//       <h2>Solicitudes de Usuarios</h2>
+//       <table style={{ width: "100%", borderCollapse: "collapse" }}>
+//         <thead>
+//           <tr style={{ background: "#f0f0f0" }}>
+//             <th>Usuario</th>
+//             <th>Email</th>
+//             <th>Descripción</th>
+//             <th>Fecha solicitud</th>
+//             <th>Fecha límite</th>
+//             <th>Estado</th>
+//             <th>Archivos asociados</th>
+//             <th>Acciones</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {requests.map((req) => {
+//             const numArchivos = Array.isArray(req.items) ? req.items.length : 0;
+//             return (
+//               <tr key={req.id} style={{ borderBottom: "1px solid #ddd" }}>
+//                 <td>{req.requesterName}</td>
+//                 <td>{req.requesterEmail}</td>
+//                 <td>{req.purpose}</td>
+//                 <td>
+//                   {new Date(req.createdAt).toLocaleDateString("es-CO", {
+//                     day: "2-digit",
+//                     month: "2-digit",
+//                     year: "numeric",
+//                   })}
+//                 </td>
+//                 <td>{formatIsoDate(req.deadline)}</td>
+//                 <td>{req.status}</td>
+//                 <td>
+//                   {numArchivos > 0 ? (
+//                     <button
+//                       onClick={() => abrirVen(req.items)}
+//                       style={{
+//                         background: "none",
+//                         border: "none",
+//                         color: "#007bff",
+//                         cursor: "pointer",
+//                         textDecoration: "underline",
+//                         padding: 0,
+//                       }}
+//                     >
+//                       {numArchivos} archivo{numArchivos > 1 ? "s" : ""}
+//                     </button>
+//                   ) : (
+//                     <em>No hay archivos</em>
+//                   )}
+//                 </td>
+//                 <td>
+//                   <button
+//                     onClick={() => onUpdateStatus(req.id, "Approved")}
+//                     style={approveBtn}
+//                   >
+//                     Aprobar
+//                   </button>
+//                   <button
+//                     onClick={() => onUpdateStatus(req.id, "Rejected")}
+//                     style={rejectBtn}
+//                   >
+//                     Rechazar
+//                   </button>
+//                 </td>
+//               </tr>
+//             );
+//           })}
+//         </tbody>
+//       </table>
+
+//       {ventavisi && (
+//         <AssetModal assets={ventarch} onClose={cerrarVen} />
+//       )}
+//     </div>
+//   );
+// };
+
+// const approveBtn = {
+//   background: "#4caf50",
+//   color: "#fff",
+//   padding: "0.4rem 0.8rem",
+//   border: "none",
+//   borderRadius: "4px",
+//   marginRight: "0.5rem",
+//   cursor: "pointer",
+// };
+
+// const rejectBtn = {
+//   background: "#f44336",
+//   color: "#fff",
+//   padding: "0.4rem 0.8rem",
+//   border: "none",
+//   borderRadius: "4px",
+//   cursor: "pointer",
+// };
+
+// export default AdminDashboard;
+
+
+import React, { useState } from "react";
+import { AssetModal } from "./AssetModal";
+
+const formatIsoDate = (iso) => {
+  if (!iso) return "";
+  const [year, month, day] = iso.split("-");
+  return `${day}/${parseInt(month, 10)}/${year}`;
+};
 
 const AdminDashboard = ({ requests, onUpdateStatus, assetsCatalog }) => {
-  const getAssetsForRequest = (itemIds) => {
-    if (!Array.isArray(itemIds) || !Array.isArray(assetsCatalog)) return [];
-    return assetsCatalog.filter((asset) => itemIds.includes(asset.id));
+  const [ventarch, setVentarch] = useState([]);
+  const [ventavisi, setVentavisi] = useState(false);
+
+  const getArchivosReq = (ids) => {
+    if (!Array.isArray(ids)) return [];
+    return assetsCatalog.filter((asset) => ids.includes(asset.id));
+  };
+
+  const abrirVen = (items) => {
+    const archivos = getArchivosReq(items);
+    setVentarch(archivos);
+    setVentavisi(true);
+  };
+
+  const cerrarVen = () => {
+    setVentavisi(false);
+    setVentarch([]);
   };
 
   return (
     <div>
       <h2>Solicitudes de Usuarios</h2>
-      {requests.map((request) => (
-        <div
-          key={request.id}
-          style={{
-            border: "1px solid #ccc",
-            padding: "1rem",
-            marginBottom: "1rem"
-          }}
-        >
-          <p><strong>Usuario:</strong> {request.requesterName}</p>
-          <p><strong>Email:</strong> {request.requesterEmail}</p>
-          <p><strong>Descripción:</strong> {request.purpose}</p>
-          <p><strong>Fecha límite:</strong> {request.deadline}</p>
-          <p><strong>Estado:</strong> {request.status}</p>
+      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <thead>
+          <tr style={{ background: "#f0f0f0" }}>
+            <th>Usuario</th>
+            <th>Email</th>
+            <th>Descripción</th>
+            <th>Fecha solicitud</th>
+            <th>Fecha límite</th>
+            <th>Estado</th>
+            <th>Archivos asociados</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {requests.map((req) => {
+            const numArchivos = Array.isArray(req.items) ? req.items.length : 0;
+            return (
+              <tr key={req.id} style={{ borderBottom: "1px solid #ddd" }}>
+                <td>{req.requesterName}</td>
+                <td>{req.requesterEmail}</td>
+                <td>{req.purpose}</td>
+                <td>
+                  {new Date(req.createdAt).toLocaleDateString("es-CO", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  })}
+                </td>
+                <td>{formatIsoDate(req.deadline)}</td>
+                <td>{req.status}</td>
+                <td>
+                  {numArchivos > 0 ? (
+                    <button
+                      onClick={() => abrirVen(req.items)}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        color: "#007bff",
+                        cursor: "pointer",
+                        textDecoration: "underline",
+                        padding: 0,
+                      }}
+                    >
+                      {numArchivos} archivo{numArchivos > 1 ? "s" : ""}
+                    </button>
+                  ) : (
+                    <em>No hay archivos</em>
+                  )}
+                </td>
+                <td>
+                  <button
+                    onClick={() => onUpdateStatus(req.id, "Approved")}
+                    style={approveBtn}
+                  >
+                    Aprobar
+                  </button>
+                  <button
+                    onClick={() => onUpdateStatus(req.id, "Rejected")}
+                    style={rejectBtn}
+                  >
+                    Rechazar
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
 
-          <div>
-            <strong>Archivos asociados:</strong>
-            {Array.isArray(request.items) && request.items.length > 0 ? (
-              <ul>
-                {getAssetsForRequest(request.items).map((asset) => (
-                  <li key={asset.id}>
-                    {asset.name} ({asset.type})
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No hay archivos asociados</p>
-            )}
-          </div>
-
-          <div style={{ marginTop: "0.5rem" }}>
-            <button
-              onClick={() => onUpdateStatus(request.id, "Approved")}
-              style={{
-                background: "#4caf50",
-                color: "#fff",
-                padding: "0.4rem 1rem",
-                border: "none",
-                borderRadius: "4px",
-                marginRight: "0.5rem"
-              }}
-            >
-              Aprobar
-            </button>
-
-            <button
-              onClick={() => onUpdateStatus(request.id, "Rejected")}
-              style={{
-                background: "#f44336",
-                color: "#fff",
-                padding: "0.4rem 1rem",
-                border: "none",
-                borderRadius: "4px"
-              }}
-            >
-              Rechazar
-            </button>
-          </div>
-        </div>
-      ))}
+      {ventavisi && (
+        <AssetModal assets={ventarch} onClose={cerrarVen} />
+      )}
     </div>
   );
 };
 
-export default AdminDashboard;*/
+const approveBtn = {
+  background: "#4caf50",
+  color: "#fff",
+  padding: "0.4rem 0.8rem",
+  border: "none",
+  borderRadius: "4px",
+  marginRight: "0.5rem",
+  cursor: "pointer",
+};
 
-import React from "react";
-
-// Componente que muestra el panel de administración de solicitudes
-const AdminDashboard = ({ requests, onUpdateStatus, assetsCatalog }) => {
-  // Función que obtiene los assets asociados a una solicitud
-  const getAssetsForRequest = (itemIds) => {
-    if (!Array.isArray(itemIds) || !Array.isArray(assetsCatalog)) return [];  // Validación
-    return assetsCatalog.filter((asset) => itemIds.includes(asset.id));  // Filtra assets
-  };
-
-  return (
-    <div>
-      <h2>Solicitudes de Usuarios</h2>
-      
-      {/* Mapea cada solicitud */}
-      {requests.map((request) => (
-        <div
-          key={request.id}
-          style={{
-            border: "1px solid #ccc",  // Estilo de tarjeta
-            padding: "1rem",
-            marginBottom: "1rem"
-          }}
-        >
-          {/* Información básica de la solicitud */}
-          <p><strong>Usuario:</strong> {request.requesterName}</p>
-          <p><strong>Email:</strong> {request.requesterEmail}</p>
-          <p><strong>Descripción:</strong> {request.purpose}</p>
-          <p><strong>Fecha límite:</strong> {request.deadline}</p>
-          <p><strong>Estado:</strong> {request.status}</p>
-
-          {/* Lista de archivos asociados */}
-          <div>
-            <strong>Archivos asociados:</strong>
-            {Array.isArray(request.items) && request.items.length > 0 ? (  // Si hay items
-              <ul>
-                {getAssetsForRequest(request.items).map((asset) => (  // Muestra cada asset
-                  <li key={asset.id}>
-                    {asset.name} ({asset.type})  {/* Nombre y tipo */}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No hay archivos asociados</p>  // Mensaje si no hay
-            )}
-          </div>
-
-          {/* Botones de acción */}
-          <div style={{ marginTop: "0.5rem" }}>
-            {/* Botón Aprobar (verde) */}
-            <button
-              onClick={() => onUpdateStatus(request.id, "Approved")}  // Aprobar
-              style={{
-                background: "#4caf50",  // Verde
-                color: "#fff",
-                padding: "0.4rem 1rem",
-                border: "none",
-                borderRadius: "4px",
-                marginRight: "0.5rem"
-              }}
-            >
-              Aprobar
-            </button>
-
-            {/* Botón Rechazar (rojo) */}
-            <button
-              onClick={() => onUpdateStatus(request.id, "Rejected")}  // Rechazar
-              style={{
-                background: "#f44336",  // Rojo
-                color: "#fff",
-                padding: "0.4rem 1rem",
-                border: "none",
-                borderRadius: "4px"
-              }}
-            >
-              Rechazar
-            </button>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
+const rejectBtn = {
+  background: "#f44336",
+  color: "#fff",
+  padding: "0.4rem 0.8rem",
+  border: "none",
+  borderRadius: "4px",
+  cursor: "pointer",
 };
 
 export default AdminDashboard;

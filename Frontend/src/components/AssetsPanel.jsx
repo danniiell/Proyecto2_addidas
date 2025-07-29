@@ -1,16 +1,16 @@
 import React from "react";
 
-const mediaHeight = "200px"; // Tamaño fijo para el medio
-const mediaStyle = {
+const hmedios = "200px";
+const estilomedios = {
   width: "100%",
-  height: mediaHeight,
+  height: hmedios,
   objectFit: "cover",
   borderRadius: "4px",
 };
 
-const defaultAudioImage = "/default-audio.jpg";
+const defaultimga = "/default-audio.jpg";
 
-const AssetsPanel = ({ assets, selectedIds = [], onSelect = () => {} }) => {
+const AssetsPanel = ({ assets = [], selectedIds = [], onSelect = () => {} }) => {
   return (
     <div style={{ padding: "1rem", backgroundColor: "#121212", color: "white" }}>
       <h2 style={{ marginBottom: "1rem" }}>Archivos Multimedia</h2>
@@ -24,22 +24,22 @@ const AssetsPanel = ({ assets, selectedIds = [], onSelect = () => {} }) => {
         }}
       >
         {assets.length > 0 ? (
-          assets.map((item, index) => {
+          assets.map((item) => {
             const tipo = (item.tipo || item.type)?.toLowerCase() ?? "";
             const url = item.url ?? "";
-            const titulo = item.titulo || item.name || `Archivo ${index + 1}`;
-            const isSelected = selectedIds.includes(item.id);
+            const titulo = item.titulo || item.name;
+            const seleccionado = selectedIds.includes(item.id);
 
             return (
               <div
-                key={index}
+                key={item.id}
                 style={{
                   position: "relative",
                   width: "100%",
-                  height: mediaHeight,
+                  height: hmedios,
                   backgroundColor: "#1a1a1a",
                   border: "1px solid #444",
-                  boxShadow: isSelected ? "0 0 0 2px #00ffcc" : "none",
+                  boxShadow: seleccionado ? "0 0 0 2px #00ffcc" : "none",
                   borderRadius: "8px",
                   cursor: "pointer",
                   overflow: "hidden",
@@ -47,7 +47,6 @@ const AssetsPanel = ({ assets, selectedIds = [], onSelect = () => {} }) => {
                 }}
                 onClick={() => onSelect(item)}
               >
-                {/* Título fijo abajo pero sobre el medio */}
                 <div
                   style={{
                     position: "absolute",
@@ -64,38 +63,30 @@ const AssetsPanel = ({ assets, selectedIds = [], onSelect = () => {} }) => {
                   {titulo}
                 </div>
 
-                {tipo.includes("image") && (
-                  <img
-                    src={`http://localhost:3001${url}`}
-                    alt={titulo}
-                    style={mediaStyle}
-                  />
+                {tipo.includes("image") && url && (
+                  <img src={url} alt={titulo} style={estilomedios} />
                 )}
 
-                {tipo.includes("video") && (
-                  <video controls style={mediaStyle}>
-                    <source src={`http://localhost:3001${url}`} type="video/mp4" />
+                {tipo.includes("video") && url && (
+                  <video controls style={estilomedios}>
+                    <source src={url} type="video/mp4" />
                   </video>
                 )}
 
-                {tipo.includes("audio") && (
-                  <div style={{ position: "relative", width: "100%", height: mediaHeight }}>
-                    <img
-                      src={defaultAudioImage}
-                      alt="Audio Preview"
-                      style={mediaStyle}
-                    />
+                {tipo.includes("audio") && url && (
+                  <div style={{ position: "relative", width: "100%", height: hmedios }}>
+                    <img src={defaultimga} alt="Audio Preview" style={estilomedios} />
                     <audio
                       controls
                       style={{
                         position: "absolute",
-                        bottom: "0",
-                        left: "0",
+                        bottom: 0,
+                        left: 0,
                         width: "100%",
                         backgroundColor: "#121212cc",
                       }}
                     >
-                      <source src={`http://localhost:3001${url}`} type="audio/mp3" />
+                      <source src={url} type="audio/mpeg" />
                     </audio>
                   </div>
                 )}
@@ -113,5 +104,4 @@ const AssetsPanel = ({ assets, selectedIds = [], onSelect = () => {} }) => {
 };
 
 export default AssetsPanel;
-
 

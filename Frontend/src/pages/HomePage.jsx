@@ -1,24 +1,35 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import styles from "./HomePage.module.css";
 import AssetsPanel from "../components/AssetsPanel";
 import RequestPopup from "../components/RequestPopup";
+import { MediaService } from "../utilities/mediaService";
 
 const HomePage = () => {
+  const [mediaAssets, setMediaAssets] = useState([]);
   const [selectedAssets, setSelectedAssets] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
-  const [mediaAssets, setMediaAssets] = useState([]);
+
+  const mediaService = useMemo(
+    () => new MediaService("http://localhost:3000"),
+    []
+  );
 
   useEffect(() => {
-    fetch("http://localhost:3000/test/requests/assets")
-      .then((res) => res.json())
-      .then((data) => setMediaAssets(data))
-      .catch((err) => console.error("Error:", err));
-  }, []);
+    mediaService
+      .fetchAssets()
+      .then((assets) => {
+        console.log("URLs cargadas:", assets.map((a) => a.url));
+        setMediaAssets(assets);
+      })
+      .catch((err) => console.error("Error al cargar assets:", err));
+  }, [mediaService]);
 
   const handleSelect = (item) => {
     setSelectedAssets((prev) => {
       const exists = prev.some((a) => a.id === item.id);
-      return exists ? prev.filter((a) => a.id !== item.id) : [...prev, item];
+      return exists
+        ? prev.filter((a) => a.id !== item.id)
+        : [...prev, item];
     });
   };
 
@@ -27,6 +38,13 @@ const HomePage = () => {
   };
 
   const handleSubmitRequest = async (formData) => {
+    const selected = new Date(formData.deadline).setHours(0, 0, 0, 0);
+    const startToday = new Date().setHours(0, 0, 0, 0);
+    if (selected < startToday) {
+      alert("La fecha límite no puede ser anterior a hoy.");
+      return;
+    }
+
     const payload = {
       requesterName: formData.name,
       requesterEmail: formData.email,
@@ -37,11 +55,14 @@ const HomePage = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/test/requests", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const response = await fetch(
+        "http://localhost:3000/test/requests",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }
+      );
 
       if (response.ok) {
         alert("✅ Solicitud enviada");
@@ -62,32 +83,36 @@ const HomePage = () => {
         <button className={styles.loginButton}>Login Admin</button>
       </header>
 
-      <div className={styles.banner}></div>
+      <div className={styles.banner} />
 
       <div className={styles.pageContent}>
         <h1 className={styles.title}>Galería de medios</h1>
-
         <AssetsPanel
           assets={mediaAssets}
           selectedIds={selectedAssets.map((a) => a.id)}
           onSelect={handleSelect}
         />
-
-        {selectedAssets.length > 0 && (
-          <button className={styles.cartButton} onClick={() => setShowPopup(true)}>
-            🛒 ({selectedAssets.length})
-          </button>
-        )}
-
-        {showPopup && (
-          <RequestPopup
-            selectedAssets={selectedAssets}
-            onClose={() => setShowPopup(false)}
-            onRemoveAsset={handleRemoveAsset}
-            onSubmit={handleSubmitRequest}
-          />
-        )}
       </div>
+        {showPopup && (
+      <div className={styles.popupWrapper}>
+        <RequestPopup
+          selectedAssets={selectedAssets}
+          onClose={() => setShowPopup(false)}
+          onRemoveAsset={handleRemoveAsset}
+          onSubmit={handleSubmitRequest}
+        />
+      </div>
+    )}
+
+    {/* 2) El carrito: */}
+    <div className={styles.cartContainer}>
+      <button
+        className={styles.cartButton}
+        onClick={() => setShowPopup((v) => !v)}
+      >
+        🛒 ({selectedAssets.length})
+      </button>
+      </div>     
     </div>
   );
 };
