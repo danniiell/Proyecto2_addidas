@@ -9,10 +9,10 @@
       "image-image1.png",
       "video-video1.mp4"
     ],
-    "status": "Rejected",
-    "adminComments": "Rechazado",
+    "status": "Approved",
+    "adminComments": "Aprobado",
     "createdAt": "2025-07-27T23:46:57.951Z",
-    "updatedAt": "2025-07-29T00:09:29.755Z"
+    "updatedAt": "2025-07-29T02:13:08.417Z"
   },
   {
     "id": "f402b371-220b-448a-b192-6ad79f2d159e",
@@ -25,10 +25,10 @@
       "video-video1.mp4",
       "image-image1.png"
     ],
-    "status": "Rejected",
-    "adminComments": "Rechazado",
+    "status": "Approved",
+    "adminComments": "Aprobado",
     "createdAt": "2025-07-28T01:49:30.513Z",
-    "updatedAt": "2025-07-29T00:09:30.848Z"
+    "updatedAt": "2025-07-29T02:13:07.782Z"
   },
   {
     "id": "57d50350-ae05-4ec3-9ebe-a35b9e933f88",
@@ -40,10 +40,10 @@
       "image-image1.png",
       "video-video1.mp4"
     ],
-    "status": "Rejected",
-    "adminComments": "Rechazado",
+    "status": "Approved",
+    "adminComments": "Aprobado",
     "createdAt": "2025-07-28T23:34:48.110Z",
-    "updatedAt": "2025-07-29T00:09:31.657Z"
+    "updatedAt": "2025-07-29T02:13:07.131Z"
   },
   {
     "id": "97b2f55a-20e2-4124-b1fd-80ad7868be28",
@@ -55,9 +55,9 @@
       "audio-audio1.mp3",
       "video-video1.mp4"
     ],
-    "status": "Pending",
-    "adminComments": "",
+    "status": "Approved",
+    "adminComments": "Aprobado",
     "createdAt": "2025-07-29T00:02:44.725Z",
-    "updatedAt": "2025-07-29T00:02:44.725Z"
+    "updatedAt": "2025-07-29T02:13:06.153Z"
   }
 ]
