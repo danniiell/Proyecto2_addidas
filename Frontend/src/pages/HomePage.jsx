@@ -134,10 +134,17 @@
 
 import { useState, useEffect, useMemo } from "react";
 import styles from "./HomePage.module.css";
-import AssetsPanel from "../components/AssetsPanel";
-import RequestPopup from "../components/RequestPopup";
-import LoginAdminModal from "../components/LoginAdminModal";
+import AssetsPanel from "../components/antiguo/AssetsPanel";
+import RequestPopup from "../components/antiguo/RequestPopup";
+import LoginAdminModal from "../components/antiguo/LoginAdminModal";
 import { MediaService } from "../utilities/mediaService";
+import Header from "../components/Header";
+import SplineBanner from "../components/Banner";
+import Footer from "../components/Footer";
+import PartnersBar from "../components/PartnersBar";
+import FilterMenu from "../components/FilterMenu";
+import Card from "../components/Gallery/Card";
+import assets from "../assetsData"; // Importa los datos de assets
 
 const HomePage = () => {
   const [mediaAssets, setMediaAssets] = useState([]);
@@ -209,31 +216,44 @@ const HomePage = () => {
     }
   };
 
-  return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <img src="/logo.jpg" alt="Logo" className={styles.logo} />
-        <button
-          className={styles.loginButton}
-          onClick={() => setShowLoginModal(true)}
-        >
-          Login Admin
-        </button>
-      </header>
+return (
+    <div className="min-h-screen flex flex-col bg-bg text-white">
+      <Header onLoginClick={() => setShowLoginModal(true)} />
 
-      <div className={styles.banner} />
+      {/* Contenido principal */}
+      <SplineBanner />
+      <PartnersBar />
+      <FilterMenu />
+      
 
-      <div className={styles.pageContent}>
-        <h1 className={styles.title}>Galería de medios</h1>
-        <AssetsPanel
+      <main className="flex-grow px-20 py-10">
+        
+        <h1 className="text-4xl font-bebas text-orange mb-6">Galería de medios</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4">
+          {assets.map((asset, index) => (
+            <Card key={index} asset={asset} />
+          ))}
+        </div>
+        {/* <AssetsPanel
           assets={mediaAssets}
           selectedIds={selectedAssets.map((a) => a.id)}
           onSelect={handleSelect}
-        />
+        /> */}
+      </main>
+
+      {/* Carrito flotante */}
+      <div className="fixed bottom-46 right-16 z-50">
+        <button
+          onClick={() => setShowPopup((v) => !v)}
+          className="w-16 h-16 rounded-full bg-orange text-white text-xl shadow-lg hover:scale-105 transition"
+        >
+          🛒{selectedAssets.length > 0 && ` (${selectedAssets.length})`}
+        </button>
       </div>
 
+      {/* Popup de solicitud */}
       {showPopup && (
-        <div className={styles.popupWrapper}>
+        <div className="fixed bottom-[240px] right-16 z-49">
           <RequestPopup
             selectedAssets={selectedAssets}
             onClose={() => setShowPopup(false)}
@@ -243,22 +263,15 @@ const HomePage = () => {
         </div>
       )}
 
-      <div className={styles.cartContainer}>
-        <button
-          className={styles.cartButton}
-          onClick={() => setShowPopup((v) => !v)}
-        >
-          🛒 ({selectedAssets.length})
-        </button>
-      </div>
-
+      {/* Modal de login */}
       {showLoginModal && (
         <LoginAdminModal onClose={() => setShowLoginModal(false)} />
       )}
+
+      <Footer />
     </div>
   );
-};
-
+}
 export default HomePage;
 
 

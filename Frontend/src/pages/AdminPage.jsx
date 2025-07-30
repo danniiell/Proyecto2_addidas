@@ -2,8 +2,8 @@ import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 
 import styles from "./AdminPage.module.css";   // CSS Module
-import AdminDashboard from "../components/AdminDashboard";
-import AssetsPanel     from "../components/AssetsPanel";
+import AdminDashboard from "../components/antiguo/AdminDashboard";
+import AssetsPanel     from "../components/antiguo/AssetsPanel";
 import { MediaService } from "../utilities/mediaService";
 
 const AdminPage = () => {

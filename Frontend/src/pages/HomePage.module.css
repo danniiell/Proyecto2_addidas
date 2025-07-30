@@ -3,47 +3,11 @@
   padding: 0;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #000; /* o el color que uses */
-  margin-bottom: 0; /* importante */
-}
 
-.logo {
-  height: 50px; /* ajusta si es necesario */
-}
-
-.loginButton {
-  background-color: transparent;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.banner {
-  width: 100vw; /* ocupa todo el ancho del viewport */
-  height: 400px;
-  background-image: url('/banner.jpg');
-  background-size: cover;
-  background-position: center;
-  margin: 0;
-  padding: 0;
-}
-
-.banner {
-  flex-grow: 1;
-}
 body, html {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-}
-
-.pageContent {
-  padding: 20px;
 }
 
 /* HomePage.module.css */
