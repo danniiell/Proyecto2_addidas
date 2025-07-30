@@ -144,7 +144,8 @@ import Footer from "../components/Footer";
 import PartnersBar from "../components/PartnersBar";
 import FilterMenu from "../components/FilterMenu";
 import Card from "../components/Gallery/Card";
-import assets from "../assetsData"; // Importa los datos de assets
+import { assets } from "../assetsData"; 
+
 
 const HomePage = () => {
   const [mediaAssets, setMediaAssets] = useState([]);
@@ -234,6 +235,7 @@ return (
             <Card key={index} asset={asset} />
           ))}
         </div>
+        
         {/* <AssetsPanel
           assets={mediaAssets}
           selectedIds={selectedAssets.map((a) => a.id)}

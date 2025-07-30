@@ -3,30 +3,36 @@
   {item.type === "video" && <video src={item.src} controls width="100" />}
   {item.type === "audio" && <audio src={item.src} controls />}
 </div> */}
+// assetsData.js
 
+
+const watermark = "/WaterMark.png";
+
+// Array de assets/productos
 const assets = [
   {
-    id: "54-2",
-    name: "ADIDAS REG 54-2",
-    thumbnailUrl: "/01.jpg", // Imagen de prueba
-    description: "Campaña Verano 2024",
-  },
-/*   {
-    id: 2,
-    name: "Video promocional REF-77",
-    previewUrl: "../02.png", // preview del video
-    format: "mp4",
-    resolution: "1920x1080",
-    type: "video"
+    name: "Producto 1",
+    type: "Electrónico",
+    dimensions: "15x10x5 cm",
+    image: "01.jpg"
   },
   {
-    id: 3,
-    name: "Audio corporativo",
-    previewUrl: "../03.jpg", // preview del audio
-    format: "mp3",
-    resolution: "320kbps",
-    type: "audio"
-  }, */
+    name: "Smartphone Premium",
+    type: "Dispositivo móvil", 
+    dimensions: "16x8x1 cm",
+    image: "02.png"
+  },
+  {
+    name: "Auriculares Bluetooth",
+    type: "Audio",
+    dimensions: "20x18x8 cm", 
+    image: "03.jpg"
+  }
 ];
 
-export default assets;
+export { watermark, assets };
+
+
+
+
+
